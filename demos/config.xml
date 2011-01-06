@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<container xmlns="http://www.symfony-project.org/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:aop="http://www.symfony-project.org/schema/dic/aop"
+    xsi:schemaLocation="http://www.symfony-project.org/schema/dic/services http://www.symfony-project.org/schema/dic/services/services-1.0.xsd"
+>
+    
+    <services>
+        <service id="annotation.reader" class="Doctrine\Common\Annotations\AnnotationReader" >
+            <call method="setAnnotationNamespaceAlias">
+                <argument>Che\Aspects\</argument>
+                <argument>aop</argument>
+            </call>
+            <call method="setAutoloadAnnotations">
+                <argument>true</argument>
+            </call>
+        </service>
+        <service id="test.aop" class="Ns\TestAOP" />
+        
+        <service id="logger" class="Zend\Log\Logger">
+            <argument type="service" id="logger.writer"/>
+        </service>
+        <service id="logger.writer" class="Zend\Log\Writer\Mock" />
+        
+        <service id="aop.log" class="Che\Aspects\LogAspect">
+            <argument type="service" id="logger" />
+        </service>
+        <service id="aop.cache" class="Che\Aspects\CacheAspect">
+            <argument type="service">
+                <service class="Zend\Cache\Backend\File" />
+            </argument>
+        </service>
+    </services>
+    
+    <aop:config class="someClass" proxyDir="./proxy">
+        <aop:aspect ref="aop.log" />
+        <aop:aspect ref="aop.cache" />
+    </aop:config>
+
+</container>
