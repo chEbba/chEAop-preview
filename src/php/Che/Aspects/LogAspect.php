@@ -53,7 +53,11 @@ class LogAspect
     {
         $method = $joinPoint->getMethod();
         $this->logger->log(
-            "Method {$method->getName()} executed correctly",
+            sprintf(
+                "Method %s::%s executed correctly",
+                $method->getDeclaringClass()->getName(),
+                $method->getName()        
+            ),
             Logger::INFO,
             array(
                 'method' => $method,
@@ -68,7 +72,8 @@ class LogAspect
         $method = $joinPoint->getMethod();
         $this->logger->log(
             sprintf(
-                "Method %s threw an Exception '%s' with message '%s'",
+                "Method %s::%s threw an Exception '%s' with message '%s'",
+                $method->getDeclaringClass()->getName(),
                 $method->getName(),
                 get_class($e),
                 $e->getMessage()
