@@ -9,10 +9,11 @@ For now it's only a Proof of Concept using [Aspect Oriented Programming](http://
 
 ## How to use
 Look at the *demos* folder
-* config.xml - IoC configuration
-* test.php - Test script
 
-Create and make writable *demos/proxy*, run *php test.php*
+*  config.xml - IoC configuration
+*  test.php - Test script
+
+Create and make writable **demos/proxy**, run **php test.php**
 
 ## How it works
 Look at source ;)
